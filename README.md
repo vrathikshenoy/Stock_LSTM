@@ -106,13 +106,6 @@ Ensure both the Flask backend and Next.js frontend servers are running concurren
 * Flask backend: `http://localhost:5000`
 * Next.js frontend: `http://localhost:3000`
 
-Configure API requests in the frontend to target the backend's base URL (`http://localhost:5000`). You can manage environment variables in the `jas/.env.local` file:
-
-```
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-This setup allows the frontend to communicate seamlessly with the backend API.
 
 ---
 
