@@ -29,7 +29,7 @@ Stock_LSTM/
 Ensure you have the following installed:
 
 * **Python 3.12+** and **pip**
-* **Node.js 14** and **npm**
+* **Node.js 15** and **npm**
 * **pnpm** (optional, for faster frontend dependency management)
 
 To install `pnpm` globally:
