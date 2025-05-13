@@ -97,6 +97,11 @@ def predict():
         f"Processing single ticker: {ticker}", file=sys.stderr
     )  # Log the ticker being processed
 
+    # Determine currency symbol based on ticker suffix
+    currency_symbol = "$"
+    if ticker.upper().endswith(".NS") or ticker.upper().endswith(".BO"):
+        currency_symbol = "₹"
+
     today = datetime.now().date()
     end_date = today.strftime("%Y-%m-%d")
     start_date = "2020-01-01"
@@ -236,7 +241,7 @@ def predict():
 
         ax.set_title(f"{ticker} Stock Price Prediction and Future Forecast")
         ax.set_xlabel("Date")
-        ax.set_ylabel("Price (USD)")
+        ax.set_ylabel(f"Price ({currency_symbol})")  # MODIFIED LINE
         ax.legend()
         ax.grid(True)
         plt.tight_layout()
@@ -257,6 +262,7 @@ def predict():
 
         response_data = {
             "ticker": ticker,
+            "currency_symbol": currency_symbol,  # ADDED LINE
             "latest_price": latest_price,
             "rmse": float(rmse),
             "plot": plot_image,
@@ -265,7 +271,7 @@ def predict():
                 "dates": future_dates,
                 "values": all_future_predictions,
             },
-            "loss_history": loss_history[::10],
+            "loss_history": loss_history[::10],  # Sending a sampled version
             "prediction_performance": {
                 "actual": actual_prices.flatten().tolist(),
                 "predicted": predicted_prices.flatten().tolist(),
