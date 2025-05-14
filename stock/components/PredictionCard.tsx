@@ -1,15 +1,10 @@
-"use client";
-import { motion } from "framer-motion";
-import { TrendingUp, Calendar, ArrowUp, ArrowDown } from "lucide-react";
+"use client"
+import { motion } from "framer-motion"
+import { TrendingUp, Calendar, ArrowUp, ArrowDown } from "lucide-react"
 
-const PredictionCard = ({
-  futurePredictions,
-  ticker,
-  latestPrice,
-  currencySymbol = "$",
-}) => {
+const PredictionCard = ({ futurePredictions, ticker, latestPrice, currencySymbol = "$" }) => {
   // Get time periods (10, 20, 50 days)
-  const periods = Object.keys(futurePredictions.dates);
+  const periods = Object.keys(futurePredictions.dates)
 
   const container = {
     hidden: { opacity: 0 },
@@ -20,12 +15,12 @@ const PredictionCard = ({
         delayChildren: 0.2,
       },
     },
-  };
+  }
 
   const item = {
     hidden: { y: 20, opacity: 0 },
     show: { y: 0, opacity: 1, transition: { duration: 0.4 } },
-  };
+  }
 
   return (
     <motion.div
@@ -40,20 +35,15 @@ const PredictionCard = ({
 
       <div className="space-y-6">
         {periods.map((period, index) => {
-          const lastIndex = futurePredictions.values[period].length - 1;
-          const finalValue = futurePredictions.values[period][lastIndex];
-          const percentChange = (finalValue / latestPrice - 1) * 100;
-          const isPositive = percentChange > 0;
+          const lastIndex = futurePredictions.values[period].length - 1
+          const finalValue = futurePredictions.values[period][lastIndex]
+          const percentChange = (finalValue / latestPrice - 1) * 100
+          const isPositive = percentChange > 0
 
           return (
-            <motion.div
-              key={period}
-              variants={item}
-              className="border-b pb-6 last:border-b-0 last:pb-0"
-            >
+            <motion.div key={period} variants={item} className="border-b pb-6 last:border-b-0 last:pb-0">
               <h3 className="font-medium text-gray-700 flex items-center mb-3">
-                <Calendar className="mr-2 h-4 w-4 text-purple-600" /> {period}{" "}
-                Day Forecast
+                <Calendar className="mr-2 h-4 w-4 text-purple-600" /> {period} Day Forecast
               </h3>
 
               <div className="flex justify-between items-center">
@@ -62,9 +52,7 @@ const PredictionCard = ({
                     {currencySymbol}
                     {finalValue.toFixed(2)}
                   </p>
-                  <div
-                    className={`flex items-center ${isPositive ? "text-green-600" : "text-red-600"} mt-1`}
-                  >
+                  <div className={`flex items-center ${isPositive ? "text-green-600" : "text-red-600"} mt-1`}>
                     {isPositive ? (
                       <span className="flex items-center">
                         <ArrowUp className="h-4 w-4 mr-1" />
@@ -82,11 +70,7 @@ const PredictionCard = ({
                 <div className="text-right">
                   <p className="text-sm text-gray-500">Forecast End Date</p>
                   <p className="font-medium">
-                    {
-                      futurePredictions.dates[period][
-                        futurePredictions.dates[period].length - 1
-                      ]
-                    }
+                    {futurePredictions.dates[period][futurePredictions.dates[period].length - 1]}
                   </p>
                 </div>
               </div>
@@ -100,22 +84,18 @@ const PredictionCard = ({
                 <div className="w-full bg-gray-200 rounded-full h-1.5">
                   <div
                     className={`h-1.5 rounded-full ${
-                      90 - index * 5 > 80
-                        ? "bg-green-500"
-                        : 90 - index * 5 > 60
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
+                      90 - index * 5 > 80 ? "bg-green-500" : 90 - index * 5 > 60 ? "bg-yellow-500" : "bg-red-500"
                     }`}
                     style={{ width: `${90 - index * 5}%` }}
                   ></div>
                 </div>
               </div>
             </motion.div>
-          );
+          )
         })}
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default PredictionCard;
+export default PredictionCard
