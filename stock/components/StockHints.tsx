@@ -1,13 +1,7 @@
 "use client"
 import { useState } from "react"
-import { HelpCircle, Search, Globe, Flag } from 'lucide-react'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { HelpCircle, Search, Globe, Flag } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -85,7 +79,7 @@ export function StockHints({ onSelectStock }: StockHintsProps) {
     return stocks.filter(
       (stock) =>
         stock.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        stock.name.toLowerCase().includes(searchQuery.toLowerCase())
+        stock.name.toLowerCase().includes(searchQuery.toLowerCase()),
     )
   }
 
@@ -110,7 +104,7 @@ export function StockHints({ onSelectStock }: StockHintsProps) {
         <DialogHeader>
           <DialogTitle>Popular Stock Tickers</DialogTitle>
         </DialogHeader>
-        
+
         <div className="relative mb-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
           <Input
@@ -121,7 +115,7 @@ export function StockHints({ onSelectStock }: StockHintsProps) {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        
+
         <Tabs defaultValue="international" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="international" className="flex items-center gap-2">
@@ -133,7 +127,7 @@ export function StockHints({ onSelectStock }: StockHintsProps) {
               Indian
             </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="international" className="mt-4">
             <ScrollArea className="h-[300px] rounded-md border p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -158,7 +152,7 @@ export function StockHints({ onSelectStock }: StockHintsProps) {
               </div>
             </ScrollArea>
           </TabsContent>
-          
+
           <TabsContent value="indian" className="mt-4">
             <ScrollArea className="h-[300px] rounded-md border p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -184,10 +178,11 @@ export function StockHints({ onSelectStock }: StockHintsProps) {
             </ScrollArea>
           </TabsContent>
         </Tabs>
-        
+
         <div className="mt-4 text-xs text-gray-500">
           <p>
-            <span className="font-medium">Tip:</span> Indian stocks end with .NS (NSE) or .BO (BSE) and will display prices in ₹
+            <span className="font-medium">Tip:</span> Indian stocks end with .NS (NSE) or .BO (BSE) and will display
+            prices in ₹
           </p>
         </div>
       </DialogContent>

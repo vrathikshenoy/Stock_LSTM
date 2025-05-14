@@ -1,23 +1,15 @@
-"use client";
-import { motion } from "framer-motion";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { LineChartIcon } from "lucide-react";
+"use client"
+import { motion } from "framer-motion"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import { LineChartIcon } from "lucide-react"
 
 const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
+  // Combine actual and predicted data for the chart
   const chartData = data.dates.map((date, index) => ({
     date,
     actual: data.actual[index],
     predicted: data.predicted[index],
-  }));
+  }))
 
   return (
     <motion.div
@@ -27,8 +19,7 @@ const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
       className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300 h-full"
     >
       <h2 className="text-xl font-semibold mb-6 flex items-center">
-        <LineChartIcon className="mr-2 text-purple-600" /> Prediction
-        Performance
+        <LineChartIcon className="mr-2 text-purple-600" /> Prediction Performance
       </h2>
 
       <div className="h-72">
@@ -47,8 +38,8 @@ const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
               dataKey="date"
               tick={{ fontSize: 12, fill: "#6b7280" }}
               tickFormatter={(value) => {
-                const date = new Date(value);
-                return `${date.getMonth() + 1}/${date.getDate()}`;
+                const date = new Date(value)
+                return `${date.getMonth() + 1}/${date.getDate()}`
               }}
               stroke="#d1d5db"
             />
@@ -58,17 +49,13 @@ const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
               tickFormatter={(value) => `${currencySymbol}${value.toFixed(0)}`}
             />
             <Tooltip
-              formatter={(value) => [
-                `${currencySymbol}${value.toFixed(2)}`,
-                "",
-              ]}
+              formatter={(value) => [`${currencySymbol}${value.toFixed(2)}`, ""]}
               labelFormatter={(label) => new Date(label).toLocaleDateString()}
               contentStyle={{
                 backgroundColor: "white",
                 borderRadius: "0.5rem",
                 border: "1px solid #e5e7eb",
-                boxShadow:
-                  "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
               }}
             />
             <Legend wrapperStyle={{ paddingTop: "10px" }} iconType="circle" />
@@ -78,12 +65,7 @@ const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
               stroke="#8b5cf6"
               strokeWidth={3}
               name="Actual Price"
-              activeDot={{
-                r: 8,
-                fill: "#8b5cf6",
-                stroke: "white",
-                strokeWidth: 2,
-              }}
+              activeDot={{ r: 8, fill: "#8b5cf6", stroke: "white", strokeWidth: 2 }}
               dot={false}
             />
             <Line
@@ -105,10 +87,7 @@ const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
           <p className="font-semibold text-purple-700">
             {(
               100 -
-              (Math.abs(
-                data.actual[data.actual.length - 1] -
-                  data.predicted[data.predicted.length - 1],
-              ) /
+              (Math.abs(data.actual[data.actual.length - 1] - data.predicted[data.predicted.length - 1]) /
                 data.actual[data.actual.length - 1]) *
                 100
             ).toFixed(1)}
@@ -120,16 +99,13 @@ const HistoricalPerformance = ({ data, currencySymbol = "$" }) => {
           <p className="font-semibold text-red-700">
             {currencySymbol}
             {(
-              data.actual.reduce(
-                (acc, val, i) => acc + Math.abs(val - data.predicted[i]),
-                0,
-              ) / data.actual.length
+              data.actual.reduce((acc, val, i) => acc + Math.abs(val - data.predicted[i]), 0) / data.actual.length
             ).toFixed(2)}
           </p>
         </div>
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default HistoricalPerformance;
+export default HistoricalPerformance
