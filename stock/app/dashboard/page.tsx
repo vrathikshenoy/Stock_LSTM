@@ -29,6 +29,7 @@ import HistoricalPerformance from "@/components/HistoricalPerformance";
 import TrainingMetrics from "@/components/TrainingMetrics";
 import MainStats from "@/components/MainStats";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { StockHints } from "@/components/StockHints";
 import { getCurrencySymbol } from "@/components/getCurrencySymbol";
 
 export default function Dashboard() {
@@ -80,6 +81,11 @@ export default function Dashboard() {
     if (inputTicker.trim()) {
       setTicker(inputTicker.toUpperCase());
     }
+  };
+
+  const handleSelectStock = (selectedTicker) => {
+    setInputTicker(selectedTicker);
+    setTicker(selectedTicker);
   };
 
   const popularStocks = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"];
@@ -211,24 +217,27 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <form onSubmit={handleSearch} className="flex w-full md:w-auto">
-            <div className="relative w-full md:w-64">
-              <Input
-                type="text"
-                value={inputTicker}
-                onChange={(e) => setInputTicker(e.target.value)}
-                placeholder="Enter stock ticker..."
-                className="pr-10"
-              />
-              <Button
-                type="submit"
-                size="sm"
-                className="absolute right-0 top-0 h-full rounded-l-none bg-purple-600 hover:bg-purple-700"
-              >
-                <Search size={18} />
-              </Button>
-            </div>
-          </form>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <form onSubmit={handleSearch} className="flex w-full">
+              <div className="relative w-full">
+                <Input
+                  type="text"
+                  value={inputTicker}
+                  onChange={(e) => setInputTicker(e.target.value)}
+                  placeholder="Enter stock ticker..."
+                  className="pr-10"
+                />
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full rounded-l-none bg-purple-600 hover:bg-purple-700"
+                >
+                  <Search size={18} />
+                </Button>
+              </div>
+            </form>
+            <StockHints onSelectStock={handleSelectStock} />
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-6">

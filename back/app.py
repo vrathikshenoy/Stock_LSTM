@@ -115,7 +115,7 @@ def predict():
             print(error_message, file=sys.stderr)
             return jsonify({"error": error_message}), 404
 
-        # Now stock_data["Close"], stock_data["Volume"] etc. should reliably be Series
+
         close_prices = stock_data["Close"].values.reshape(-1, 1)
 
         scaler = MinMaxScaler()
