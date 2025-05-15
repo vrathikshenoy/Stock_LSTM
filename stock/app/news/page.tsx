@@ -20,7 +20,7 @@ import {
   getMarketNews,
   getStockNews,
   type NewsItem,
-} from "@/services/geminiNewsService";
+} from "@/app/actions/geminiNewsService";
 
 export default function NewsPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
