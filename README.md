@@ -134,4 +134,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Feel free to customize this `README.md` further to suit your project's specific needs.
