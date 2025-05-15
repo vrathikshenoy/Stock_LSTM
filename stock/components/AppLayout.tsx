@@ -28,6 +28,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
   const navItems = [
     { name: "Dashboard", path: "/dashboard" },
+    { name: "Recommendation", path: "/recommendation" },
     { name: "Watchlist", path: "/watchlist" },
     { name: "News", path: "/news" },
     { name: "Portfolio", path: "/portfolio" },

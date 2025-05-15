@@ -1,3 +1,4 @@
+"use server";
 import { v4 as uuidv4 } from "uuid";
 import {
   GoogleGenerativeAI,
@@ -23,13 +24,18 @@ export interface NewsItem {
   };
 }
 
-// API key would typically be stored in environment variables
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// Fix 1: Properly access environment variables in Next.js server components
+// In Next.js, use process.env directly without NEXT_PUBLIC_ prefix for server components
+const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
-console.log("GEMINI_API_KEY", process.env.GEMINI_API_KEY);
+// Fix 2: Proper debugging - avoid logging sensitive API keys
+console.log("GEMINI_API_KEY available:", !!GEMINI_API_KEY);
 
-// Initialize the Google Generative AI client
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+// Initialize the Google Generative AI client only if the API key is available
+let genAI: GoogleGenerativeAI | null = null;
+if (GEMINI_API_KEY) {
+  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+}
 
 // The model to use
 const MODEL_NAME = "gemini-2.0-flash-001";
@@ -81,6 +87,12 @@ const generateNewsPrompt = (
  * Calls Gemini API to get news using the official SDK
  */
 const fetchGeminiNews = async (prompt: string): Promise<any> => {
+  // Fix 3: Check if genAI is initialized before using it
+  if (!genAI) {
+    console.error("Gemini API not initialized - missing API key");
+    throw new Error("API key not configured");
+  }
+
   try {
     // Get the model
     const model = genAI.getGenerativeModel({
@@ -317,6 +329,12 @@ export async function getMarketNews(
 ): Promise<NewsItem[]> {
   try {
     const prompt = generateNewsPrompt(market);
+    // Fix 4: Add better error handling for missing API key
+    if (!genAI || !GEMINI_API_KEY) {
+      console.warn("Using fallback news - Gemini API key not configured");
+      return fallbackNews.slice(0, count);
+    }
+
     const rawNews = await fetchGeminiNews(prompt);
 
     // Validate that rawNews is an array before processing
@@ -342,6 +360,12 @@ export async function getStockNews(
 ): Promise<NewsItem[]> {
   try {
     const prompt = generateNewsPrompt("global", symbol);
+    // Fix 5: Add better error handling for missing API key
+    if (!genAI || !GEMINI_API_KEY) {
+      console.warn("Using fallback news - Gemini API key not configured");
+      return getCustomizedFallbackNews(symbol, count);
+    }
+
     const rawNews = await fetchGeminiNews(prompt);
 
     // Validate that rawNews is an array before processing
